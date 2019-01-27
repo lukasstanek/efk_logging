@@ -1,0 +1,33 @@
+# This is the internal user database
+# The hash value is a bcrypt hash and can be generated with plugin/tools/hash.sh
+
+#password is: bestAdminPwEver
+admin:
+  readonly: true
+  hash: $2a$12$lx6aiIIOUAZzLLoMwOoQveIX83StGPi3xtkPS8t92pgGDzriBNvEi
+  roles:
+    - admin
+
+#password is: kibServer0154
+kibanaserver:
+  readonly: true
+  hash: $2a$12$BJQMdx63L7HP9LsvL11uzusyvvJBmcO.OgWTTwHN0.s2sgyKe1qZ6
+
+#password is: kib4n3r0!!@35
+kibanaro:
+  hash: $2a$12$b37oGu5RUWpzhD4dqYjWuO8CxyQuD..2QyiJtSmwGTFJySR2aLcQG
+  roles:
+    - kibanauser
+    - readall
+
+#password is: r3ad4llUser5959
+readall:
+  hash: $2a$12$3Gm6ximPc.vdg.Ej5m8ibOqpi4f4dW4Yt47/WoqdbkdGyAm9T9qLa
+  roles:
+    - readall
+
+#password is: sn4psh0tRest0re1337%
+snapshotrestore:
+  hash: $2a$12$HMFfOuuV6/GLRJmvJ0R1d.2pbMRmPlPt1sunVslQb4pt1I3NIRx0u
+  roles:
+    - snapshotrestore

@@ -1,0 +1,28 @@
+ca:
+  root:
+    dn: CN=root.ca.gatekeeper.com,OU=CA,O=Gatekeeper com, DC=gatekeeper,DC=com
+    keysize: 4096
+    pkPassword: none
+    validityDays: 3650
+    file: root-ca.pem
+
+defaults:
+  validityDays: 730
+  pkPassword: none
+#  generatedPasswordLength: 12
+  nodesDn:
+    - "CN=*.gatekeeper.com,OU=Ops,O=Gatekeeper Com,DC=gatekeeper,DC=com"
+  nodeOid: "1.2.3.4.5.5"
+  httpsEnabled: true
+  reuseTransportCertificatesForHttp: false
+
+nodes:
+  - name: node1
+    dn: CN=main.gatekeeper.com,OU=Ops,O=Gatekeeper Com,DC=gatekeeper,DC=com
+#    dns: node1.example.com
+#    ip: 10.0.2.1
+
+clients:
+  - name: admin
+    dn: CN=admin.gatekeeper.com,OU=Ops,O=Gatekeeper Com,DC=example,DC=com
+    admin: true
