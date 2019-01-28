@@ -1,0 +1,42 @@
+version: '2'
+services:
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:6.5.4
+    container_name: filebeat
+    user: root
+    volumes:
+    - "./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro"
+    - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+    - "/var/run/docker.sock:/var/run/docker.sock:ro" 
+    command: filebeat -e -strict.perms=false 
+    environment:
+      output.elasticsearch.hosts: "elasticsearch:9200"
+    env_file:
+      - .env
+    networks:
+     - default
+     - elk
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:6.5.4
+    container_name: metricbeat
+    user: root 
+    volumes:
+    - "./metricbeat/metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro"
+    - "/var/run/docker.sock:/var/run/docker.sock:ro" 
+    - "/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro" 
+    - "/proc:/hostfs/proc:ro" 
+    - "/:/hostfs:ro" 
+    command: metricbeat -e 
+    environment: 
+      output.elasticsearch.hosts: "elasticsearch:9200"
+    env_file:
+      - .env
+    networks:
+      - default
+      - elk
+networks:
+
+  elk:
+    external:
+      name: logserver_elk

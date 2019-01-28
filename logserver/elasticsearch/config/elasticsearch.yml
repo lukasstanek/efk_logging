@@ -1,0 +1,41 @@
+---
+## Default Elasticsearch configuration from elasticsearch-docker.
+## from https://github.com/elastic/elasticsearch-docker/blob/master/build/elasticsearch/elasticsearch.yml
+#
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+
+# minimum_master_nodes need to be explicitly set when bound on a public IP
+# set to 1 to allow single node clusters
+# Details: https://github.com/elastic/elasticsearch/pull/17288
+discovery.zen.minimum_master_nodes: 1
+
+## Use single node discovery in order to disable production mode and avoid bootstrap checks
+## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+#
+discovery.type: single-node
+
+xpack.security.enabled: false
+
+## Search Guard
+#
+searchguard.enterprise_modules_enabled: false
+
+# searchguard.ssl.transport.keystore_filepath: sg/node-0-keystore.jks
+# searchguard.ssl.transport.truststore_filepath: sg/truststore.jks
+# searchguard.ssl.transport.enforce_hostname_verification: false
+
+# searchguard.authcz.admin_dn:
+#   - "CN=kirk,OU=client,O=client,l=tEst,C=De"
+searchguard.ssl.transport.pemcert_filepath: sg/certs/node1.pem
+searchguard.ssl.transport.pemkey_filepath: sg/certs/node1.key
+searchguard.ssl.transport.pemtrustedcas_filepath: sg/certs/root-ca.pem
+searchguard.ssl.transport.enforce_hostname_verification: false
+searchguard.ssl.transport.resolve_hostname: false
+# searchguard.ssl.http.enabled: true
+# searchguard.ssl.http.pemcert_filepath: sg/certs/node1_http.pem
+# searchguard.ssl.http.pemkey_filepath: sg/certs/node1_http.key
+# searchguard.ssl.http.pemtrustedcas_filepath: sg/certs/root-ca.pem
+searchguard.authcz.admin_dn:
+- CN=admin.gatekeeper.com,OU=Ops,O=Gatekeeper Com,DC=example,DC=com
+searchguard.cert.oid: 1.2.3.4.5.5

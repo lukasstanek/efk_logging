@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+        SG_VERSION: $SG_VERSION
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./gatekeeper/config/sg/certs:/usr/share/elasticsearch/config/sg/certs:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    env_file:
+      - .env
+    networks:
+      - elk
+
+  kibana:
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: $ELK_VERSION
+        SG_VERSION_KIBANA: $SG_VERSION_KIBANA
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config:ro
+    env_file:
+      - .env
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+
+  elk:
+    driver: bridge
