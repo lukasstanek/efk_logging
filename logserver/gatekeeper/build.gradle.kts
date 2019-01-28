@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
@@ -22,6 +23,7 @@ buildscript {
     }
 }
 
+
 plugins {
     // Apply the application plugin to add support for building a CLI application.
     application
@@ -30,7 +32,6 @@ plugins {
     id("idea")
     id("java")
     id("io.spring.dependency-management") version "1.0.6.RELEASE"
-    id("com.github.johnrengelman.shadow") version "2.0.4"
     id("net.ltgt.apt-idea") version "0.20"
     kotlin("kapt") version "1.3.11"
 }
@@ -87,7 +88,16 @@ application {
     // Define the main class for the application.
     mainClassName = "gatekeeper.AppKt"
 }
+// due to initialization bug, this plugin is initiliazed here
+apply(plugin="com.github.johnrengelman.shadow")
 
-val compileKotlin: KotlinCompile<KotlinJvmOptions> by tasks
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
-compileKotlin.kotlinOptions.javaParameters = true
+
+val shadowJar: ShadowJar by tasks
+shadowJar.mergeServiceFiles()
+
+tasks.withType<KotlinCompile<KotlinJvmOptions>> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        javaParameters = true
+    }
+}
