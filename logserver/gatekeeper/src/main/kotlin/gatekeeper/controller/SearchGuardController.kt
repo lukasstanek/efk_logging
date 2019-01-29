@@ -2,6 +2,7 @@ package gatekeeper.controller
 
 import gatekeeper.service.searchGuard.SgCertificateService
 import gatekeeper.service.searchGuard.SgPermissionService
+import gatekeeper.util.PasswordHasher
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.annotation.Controller
@@ -25,6 +26,6 @@ class SearchGuardController(@Inject val permissionSerivce: SgPermissionService,
     //Temporary function for testing
     @Get("/hash")
     fun hashPassword(password: String): String? {
-        return hashpw(password, BCrypt.gensalt(12))
+        return PasswordHasher.hashPw(password)
     }
 }
