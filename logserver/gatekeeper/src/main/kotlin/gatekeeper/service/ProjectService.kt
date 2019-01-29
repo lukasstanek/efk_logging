@@ -1,12 +1,20 @@
 package gatekeeper.service
 
+import gatekeeper.model.CreateProjectRequest
 import gatekeeper.model.Project
+import gatekeeper.util.PasswordHasher
 
 class ProjectService {
-    val projects: MutableList<Project> = mutableListOf()
+    private val projects: MutableList<Project> = mutableListOf()
 
-    fun addProject(project: Project) {
-        if(projects.none{ it == project }){
+    fun addProject(projectRequest: CreateProjectRequest) {
+        val project = Project(
+                name = projectRequest.name,
+                indexPrefix = projectRequest.name.toLowerCase().replace(" ", "-"),
+                passwordHash = PasswordHasher.hashPw(projectRequest.password)
+        )
+
+        if(projects.none{ it.indexPrefix == project.indexPrefix }){
             projects.add(project)
         }
     }
