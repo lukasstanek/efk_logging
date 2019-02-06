@@ -82,6 +82,17 @@ dependencies {
 
     kapt("io.micronaut:micronaut-inject-java")
 
+    implementation("com.github.kittinunf.fuel:fuel:2.0.1")
+    implementation("com.github.kittinunf.fuel:fuel-rxjava:2.0.1")
+    implementation("com.github.kittinunf.fuel:fuel-json:2.0.1")
+
+    implementation("org.keycloak:keycloak-admin-client:4.8.3.Final")
+    implementation(group="org.jboss.resteasy", name="resteasy-client", version="3.6.2.Final")
+    implementation("org.jboss.resteasy:resteasy-jackson2-provider:3.6.2.Final")
+
+//    implementation("be.looorent:keycloak-micronaut-adapter:1.4.0")
+
+
 }
 
 application {

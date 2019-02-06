@@ -9,7 +9,7 @@ import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.micronaut.scheduling.annotation.Async
 import javax.inject.Singleton
 
-@Singleton
+//@Singleton
 open class SgCertificateService: ApplicationEventListener<ServerStartupEvent> {
     @Async
     override fun onApplicationEvent(event: ServerStartupEvent?) {
