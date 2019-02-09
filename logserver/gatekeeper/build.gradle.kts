@@ -89,6 +89,7 @@ dependencies {
     implementation("org.keycloak:keycloak-admin-client:4.8.3.Final")
     implementation(group="org.jboss.resteasy", name="resteasy-client", version="3.6.2.Final")
     implementation("org.jboss.resteasy:resteasy-jackson2-provider:3.6.2.Final")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
 
 //    implementation("be.looorent:keycloak-micronaut-adapter:1.4.0")
 

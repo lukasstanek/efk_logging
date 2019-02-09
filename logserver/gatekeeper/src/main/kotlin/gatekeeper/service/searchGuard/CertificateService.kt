@@ -9,13 +9,8 @@ import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.micronaut.scheduling.annotation.Async
 import javax.inject.Singleton
 
-//@Singleton
-open class SgCertificateService: ApplicationEventListener<ServerStartupEvent> {
-    @Async
-    override fun onApplicationEvent(event: ServerStartupEvent?) {
-        generateCerts()
-    }
-
+@Singleton
+open class CertificateService {
     companion object {
         val logger by LoggerDelegate()
     }
@@ -24,12 +19,18 @@ open class SgCertificateService: ApplicationEventListener<ServerStartupEvent> {
     fun generateCerts(){
         logger.info("Generating search-guard certificates...")
         SystemExitControl.forbidSystemExitCall()
-        SearchGuardTlsTool.main(arrayOf(
-                "-c", "config/sg/sg_cert_config.yml",
-                "-t", "config/sg/certs",
-                "-ca", "-crt"
-        ))
-        SystemExitControl.enableSystemExitCall()
+        try{
+            SearchGuardTlsTool.main(arrayOf(
+                    "-c", "config/sg/default/sg_cert_config.yml",
+                    "-t", "config/sg/certs",
+                    "-ca", "-crt"
+            ))
+        }catch(e: SystemExitControl.ExitTrappedException){
+
+        }finally {
+            SystemExitControl.enableSystemExitCall()
+        }
+
         logger.info("Finished certificate generation.")
     }
 
