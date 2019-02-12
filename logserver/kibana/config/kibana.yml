@@ -14,3 +14,5 @@ elasticsearch.password: "${KIBANA_SERVER_PASSWORD}"
 searchguard.cookie.password: "123567818187654rwrwfsfshdhdhtegdhfzftdhncn"
 
 xpack.security.enabled: false
+
+elasticsearch.requestHeadersWhitelist: ["authorization", "sgtenant", "x-proxy-user", "x-proxy-roles"]

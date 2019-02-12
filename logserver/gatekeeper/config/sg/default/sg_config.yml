@@ -2,10 +2,25 @@ searchguard:
   dynamic:
     http:
       xff:
-        enabled: false
+        enabled: true
+        remoteIpHeader: 'x-forwarded-for'
+        internalProxies: '192\.168\.0\.11|192\.168\.0\.12'
     authc:
       basic_internal_auth_domain:
+        enabled: true
+        order: 0
         http_authenticator:
           type: basic
         authentication_backend:
           type: intern
+      proxy_auth_domain:
+        enabled: true
+        order: 1
+        http_authenticator:
+          type: proxy
+          challenge: false
+          config:
+            user_header: "x-proxy-user"
+            roles_header: "x-proxy-roles"
+        authentication_backend:
+          type: noop
